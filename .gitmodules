@@ -1,0 +1,3 @@
+[submodule "public/progress"]
+	path = public/progress
+	url = https://github.com/mdix/progress.js

@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title Bulk flick
+    script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"
+    script type="text/javascript" src="/progress/progress.js"
+    link rel="stylesheet" type="text/css" href="/progress/progress.css"
+    javascript:
+      $(function(){
+        progressBar = new Progress.bar({ id: "progress_bar", autoRemove: false, backgroundSpeed: 5, type: "charge", showPercentage: true });
+        progressBar.renderTo(document.getElementById('progress'));
+        percent = 0;
+        window.setInterval(function() {
+          if (100 > percent) {
+            $.getJSON("uploads/current_state", function(data) {
+              data.rate
+              progressBar.update(data.rate);
+            });
+          }
+        }, 1500);
+      });
+  body
+
+    div id="progress"
+    
+    form action="/uploads/add_queue" method="post"
+      p
+        select name="sets_id"
+          option value="" <新規set>
+          - for elem in @sets
+            option value="#{elem.id}" #{elem.title}
+      p
+        label set名:
+        input type="text" name="name"
+      p
+        label アップロード元ローカルディレクトリパス:
+        input type="text" name="root"
+      p
+        input type="submit"
